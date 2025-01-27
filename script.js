@@ -31,7 +31,7 @@ let winnerList = [
 // [6,7,8] matches with x and [6,7,8] aere among winnerList, so X is winner 
 
 
-const board_array = new Array(9).fill("E")
+let board_array = new Array(9).fill("E")
 // console.log(board_array);// Array(9) ["E", "E", "E", "E", "E", "E", "E", "E", "E"]
 
 
@@ -148,3 +148,45 @@ board.addEventListener("click", callbacktoEvent)
 // draw happens when the board filled up and no one became winner 
 // special case in draw: when at the very step, winner get decided, in that case the code doesnt print match drawn, 
 // to handle that add return after winner thingy announced.
+
+
+
+// task 6: restart game btn work
+
+// when restart game gets clicked, every cell on board should get re-empty
+// full page should get cleared, and eventListener which gets off after result gets announced, shoould restart as well. 
+
+
+// when we click restart button, the cell gets empty 
+
+//... 1> restart button should listen to click, so add eventListener to it. 
+//... 2> that eventListener gets triggered on click
+//... 3> work of that eventListener is to make innerHTML of all cell as empty again (work of callback func of eventListener on restart btn)
+
+const restart = document.getElementById("restartButton")
+
+restart.addEventListener("click", ()=>{
+
+    const allCell = document.getElementsByClassName("cell") // this gives us htmlCollection
+    // so we first convert it into an array and then perfrom forEach loop to iterate over each cell 
+
+    Array.from(allCell).forEach((value)=>{
+        value.innerHTML = ""
+    })
+
+    // with this, we also have to make (turn =="o") again and (total_turn = 0) again 
+    // also initialise a new board_array again 
+
+    turn = "o"
+    total_turn = 0
+    board_array = new Array(9).fill("E")
+
+    // also adding eventListener back to every cell again 
+    board.addEventListener("click", callbacktoEvent)
+
+    // also even after restart, the winner msg still lies there --> we need to handle that as well
+    // to handle that, with restart button, make the winner msg innerHTML empty 
+
+    document.getElementById("winningMessage").innerHTML = ""
+
+})
